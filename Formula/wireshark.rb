@@ -68,7 +68,7 @@ class Wireshark < Formula
 
     if build.with? "qt"
       prefix.install bin/"Wireshark.app"
-      bin.install_symlink prefix/"Wireshark.app/Contents/MacOS/Wireshark"
+      bin.install_symlink prefix/"Wireshark.app/Contents/MacOS/Wireshark" => "wireshark"
     end
 
     if build.with? "headers"
