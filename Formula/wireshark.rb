@@ -23,14 +23,15 @@ class Wireshark < Formula
   depends_on "glib"
   depends_on "gnutls"
   depends_on "libgcrypt"
-  depends_on "geoip" => :recommended
-  depends_on "c-ares" => :recommended
+  depends_on "geoip"
+  depends_on "c-ares"
   depends_on "libsmi" => :optional
-  depends_on "lua" => :optional
+  depends_on "lua"
   depends_on "portaudio" => :optional
   depends_on "qt" => :optional
   depends_on "gtk+3" => :optional
   depends_on "gtk+" => :optional
+  depends_on "libssh"
   depends_on "gnome-icon-theme" if build.with? "gtk+3"
 
   def install
@@ -56,29 +57,10 @@ class Wireshark < Formula
       args << "-DENABLE_PORTAUDIO=OFF"
     end
 
-    if build.with? "geoip"
-      args << "-DENABLE_GEOIP=ON"
-    else
-      args << "-DENABLE_GEOIP=OFF"
-    end
-
-    if build.with? "c-ares"
-      args << "-DENABLE_CARES=ON"
-    else
-      args << "-DENABLE_CARES=OFF"
-    end
-
-    if build.with? "libsmi"
-      args << "-DENABLE_SMI=ON"
-    else
-      args << "-DENABLE_SMI=OFF"
-    end
-
-    if build.with? "lua"
-      args << "-DENABLE_LUA=ON"
-    else
-      args << "-DENABLE_LUA=OFF"
-    end
+    args << "-DENABLE_GEOIP=ON"
+    args << "-DENABLE_CARES=ON"
+    args << "-DENABLE_SMI=" + (build.with?("libsmi") ? "ON" : "OFF")
+    args << "-DENABLE_LUA=ON"
 
     system "cmake", *args
     system "make"
