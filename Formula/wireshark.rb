@@ -1,9 +1,9 @@
 class Wireshark < Formula
   desc "Graphical network analyzer and capture tool"
   homepage "https://www.wireshark.org"
-  url "https://www.wireshark.org/download/src/all-versions/wireshark-2.2.8.tar.bz2"
-  mirror "https://1.eu.dl.wireshark.org/src/wireshark-2.2.8.tar.bz2"
-  sha256 "ecf02c148c9ab6e809026ad5743fe9be1739a9840ef6fece6837a7ddfbdf7edc"
+  url "https://www.wireshark.org/download/src/all-versions/wireshark-2.4.1.tar.xz"
+  mirror "https://1.eu.dl.wireshark.org/src/wireshark-2.4.1.tar.xz"
+  sha256 "02ddbcf9b10f9dfa1e36eec00fe00cb5b5ce8e07203843baf056ac7909911fcd"
   head "https://code.wireshark.org/review/wireshark", :using => :git
 
   bottle do
@@ -32,6 +32,10 @@ class Wireshark < Formula
   depends_on "gtk+3" => :optional
   depends_on "gtk+" => :optional
   depends_on "libssh"
+  depends_on "nghttp2"
+  depends_on "lz4"
+  depends_on "snappy"
+  depends_on "spandsp"
   depends_on "gnome-icon-theme" if build.with? "gtk+3"
 
   def install
@@ -61,6 +65,10 @@ class Wireshark < Formula
     args << "-DENABLE_CARES=ON"
     args << "-DENABLE_SMI=" + (build.with?("libsmi") ? "ON" : "OFF")
     args << "-DENABLE_LUA=ON"
+    args << "-DENABLE_NGHTTP2=ON"
+    args << "-DENABLE_LZ4=ON"
+    args << "-DENABLE_SNAPPY=ON"
+    args << "-DENABLE_SPANDSP=ON"
 
     system "cmake", *args
     system "make"
