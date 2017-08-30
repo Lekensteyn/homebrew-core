@@ -18,6 +18,7 @@ class Wireshark < Formula
   option "with-gtk+", "Build the wireshark command with gtk+"
   option "with-qt", "Build the wireshark command with Qt (can be used with or without either GTK option)"
   option "with-headers", "Install Wireshark library headers for plug-in development"
+  option "with-nghttp2", "Enable HTTP/2 header dissection"
 
   depends_on "cmake" => :build
   depends_on "glib"
@@ -32,7 +33,7 @@ class Wireshark < Formula
   depends_on "gtk+3" => :optional
   depends_on "gtk+" => :optional
   depends_on "libssh"
-  depends_on "nghttp2"
+  depends_on "nghttp2" => :optional
   depends_on "lz4"
   depends_on "snappy"
   depends_on "spandsp"
@@ -65,7 +66,7 @@ class Wireshark < Formula
     args << "-DENABLE_CARES=ON"
     args << "-DENABLE_SMI=" + (build.with?("libsmi") ? "ON" : "OFF")
     args << "-DENABLE_LUA=ON"
-    args << "-DENABLE_NGHTTP2=ON"
+    args << "-DENABLE_NGHTTP2=" + (build.with?("nghttp2") ? "ON" : "OFF")
     args << "-DENABLE_LZ4=ON"
     args << "-DENABLE_SNAPPY=ON"
     args << "-DENABLE_SPANDSP=ON"
